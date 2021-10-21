@@ -1,16 +1,4 @@
-from datetime import datetime
 import random
-import pygsheets
-
-# Initialize google sheet client
-client = pygsheets.authorize(service_account_file='secret.json')
-sheet = client.open_by_key('1kF05N3kjYWG_oTJTeteCX5PDcB2RqOCC1FPBxst6nUo')
-point = sheet.worksheet_by_title('Point Data Set')
-comp = sheet.worksheet_by_title('Comparison Data Set')
-
-# Prepare to count comparisons
-comparisons = 0
-# Quick sort algorithm
 def quickSort(arr):
     global comparisons
     # Declares 3 lists that contain values relating to the pivot
@@ -35,8 +23,6 @@ def quickSort(arr):
     else:
         # Returns original list if it's only 1 element long
         return arr
-
-# Takes a list size, then returns time it takes to quicksort
 def sort(listSize):
     # Reset comparison variable from last sort
     global comparisons
@@ -46,29 +32,8 @@ def sort(listSize):
     for i in range(0,listSize):
         n = random.randint(1,1000)
         numbers.append(n)
+    # Measure time for quick sort
     quickSort(numbers)
-
-    # Return list size and both times
     return comparisons
 
-# Add a group of rows with given list sizes
-#def addBatch(listSizes):
-#    for i in range(len(listSizes)):
-#        comp.insert_rows(i+1, values=sort(listSizes[i]))
-
-# Create a data set that is used to compare point data set to
-#sizes = []
-#for i in range(0, 21):
-#    sizes.append(i*100)
-#addBatch(sizes)
-
-# Input point data set
-#for i in range(1000):
-#  point.insert_rows(i+1, values=sort(1000))
-
-for i in range(0, 21):
-    total = 0
-    for j in range(0, 100):
-        total += sort(i*100)
-    total /= 100
-    print(str(total))
+print(sort(1000))

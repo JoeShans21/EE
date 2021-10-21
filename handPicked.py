@@ -1,12 +1,13 @@
-from datetime import datetime
 import random
 import pygsheets
 
 # Initialize google sheet client
 client = pygsheets.authorize(service_account_file='secret.json')
 sheet = client.open_by_key('1kF05N3kjYWG_oTJTeteCX5PDcB2RqOCC1FPBxst6nUo')
-point = sheet.worksheet_by_title('Point Data Set')
-comp = sheet.worksheet_by_title('Comparison Data Set')
+best = sheet.worksheet_by_title('Best Case Set')
+
+
+
 
 # Prepare to count comparisons
 comparisons = 0
@@ -51,24 +52,17 @@ def sort(listSize):
     # Return list size and both times
     return comparisons
 
-# Add a group of rows with given list sizes
-#def addBatch(listSizes):
-#    for i in range(len(listSizes)):
-#        comp.insert_rows(i+1, values=sort(listSizes[i]))
 
-# Create a data set that is used to compare point data set to
-#sizes = []
-#for i in range(0, 21):
-#    sizes.append(i*100)
-#addBatch(sizes)
 
-# Input point data set
-#for i in range(1000):
-#  point.insert_rows(i+1, values=sort(1000))
 
 for i in range(0, 21):
-    total = 0
+    arr = []
     for j in range(0, 100):
-        total += sort(i*100)
-    total /= 100
-    print(str(total))
+        arr.append(sort(i*100))
+    arr.sort(reverse = True)
+    total = 0
+    for k in range(0, 5):
+        total += arr[k]
+    avg = total / 5
+    print(str(avg))
+
